@@ -41,15 +41,19 @@
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="icon-bar"></span>
+            <!--
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+          -->
           </a>
-          <a class="brand" href="#">ServerRegistry</a>
+          <a class="brand" href="#">Server Registry</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
+              <li><%= link_to "Servers", servers_path  %></li>
+              <!--
               <li><%= link_to "Link2", "/path2"  %></li>
               <li><%= link_to "Link3", "/path3"  %></li>
+            -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -58,9 +62,10 @@
 
     <div class="container">
         <div class="row">
-          <div class="span9">
+          <div class="span12">
              <%= yield %>
           </div>
+          <!--
           <div class="span3">
             <div class="well sidebar-nav">
               <h3>Sidebar</h3>
@@ -70,8 +75,9 @@
                 <li><%= link_to "Link2", "/path2"  %></li>
                 <li><%= link_to "Link3", "/path3"  %></li>
               </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
+            </div>
+          </div>
+          -->
         </div><!--/row-->
 
       <footer>
