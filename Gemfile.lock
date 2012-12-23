@@ -92,6 +92,9 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
+    simple_form (2.0.4)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -123,6 +126,7 @@ DEPENDENCIES
   less-rails (~> 2.2.5)
   mysql2
   rails (= 3.2.9)
+  simple_form (= 2.0.4)
   therubyracer
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)

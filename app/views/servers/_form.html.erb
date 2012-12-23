@@ -1,7 +1,7 @@
-<%= form_for(@server) do |f| %>
+<%= simple_form_for(@server, :html => { :class => 'form-horizontal' }) do |f| %>
   <% if @server.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@server.errors.count, "error") %> prohibited this server from being saved:</h2>
+    <div class="text-error" id="error_explanation">
+      <h3><%= pluralize(@server.errors.count, "error") %> prohibited this server from being saved:</h3>
 
       <ul>
       <% @server.errors.full_messages.each do |msg| %>
@@ -11,7 +11,10 @@
     </div>
   <% end %>
 
+  <%= f.input :hostname %>
+  <%= f.input :ip_address, :label => "IP Address" %>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.button :submit %>
   </div>
 <% end %>
