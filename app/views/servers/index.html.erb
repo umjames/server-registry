@@ -9,8 +9,8 @@
 
 <% @servers.each do |server| %>
   <tr>
-    <td><%= server.hostname %></td>
-    <td><%= server.ip_address %></td>
+    <td><%= link_to server.hostname, server_path(server) %></td>
+    <td><%= link_to server.ip_address, server_path(server) %></td>
     <td>
       <%= link_to 'Edit', edit_server_path(server), :class => "btn btn-mini" %>
       <%= link_to 'Destroy', server, :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-mini" %>

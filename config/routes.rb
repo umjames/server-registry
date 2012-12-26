@@ -5,6 +5,7 @@ ServerRegistry::Application.routes.draw do
   root :to => "servers#index"
 
   resources :servers
+  resources :categories
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

@@ -1,8 +1,11 @@
 class ServersController < ApplicationController
+  include ServerRegistry::Servers::BaseLogic
+  include ServerRegistry::Categories::BaseLogic
+
   # GET /servers
   # GET /servers.json
   def index
-    @servers = Server.all
+    @servers = all_servers
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +16,7 @@ class ServersController < ApplicationController
   # GET /servers/1
   # GET /servers/1.json
   def show
-    @server = Server.find(params[:id])
+    @server = get_server(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,6 +28,7 @@ class ServersController < ApplicationController
   # GET /servers/new.json
   def new
     @server = Server.new
+    @categories = all_category_names
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +38,17 @@ class ServersController < ApplicationController
 
   # GET /servers/1/edit
   def edit
-    @server = Server.find(params[:id])
+    @server = get_server(params[:id])
+    @categories = all_category_names
   end
 
   # POST /servers
   # POST /servers.json
   def create
-    @server = Server.new(params[:server])
+    category_names = extract_category_names_param
+
+    @server = new_server_with_params(params[:server])
+    associate_server_with_categories(@server, category_names)
 
     respond_to do |format|
       if @server.save
@@ -56,7 +64,10 @@ class ServersController < ApplicationController
   # PUT /servers/1
   # PUT /servers/1.json
   def update
-    @server = Server.find(params[:id])
+    category_names = extract_category_names_param
+
+    @server = get_server(params[:id])
+    associate_server_with_categories(@server, category_names)
 
     respond_to do |format|
       if @server.update_attributes(params[:server])
@@ -72,12 +83,21 @@ class ServersController < ApplicationController
   # DELETE /servers/1
   # DELETE /servers/1.json
   def destroy
-    @server = Server.find(params[:id])
+    @server = get_server(params[:id])
     @server.destroy
 
     respond_to do |format|
       format.html { redirect_to servers_url }
       format.json { head :no_content }
     end
+  end
+
+  protected
+
+  def extract_category_names_param
+    category_names = params[:server].delete(:categories)
+    category_names.reject! { |name| name.blank? }
+
+    return category_names
   end
 end

@@ -14,4 +14,36 @@ class ServerTest < ActiveSupport::TestCase
   	assert !server2.save, "was able to save a duplicate server"
   	assert !server2.errors.empty?
   end
+
+  test "can update server" do
+  	server1 = FactoryGirl.create(:server)
+
+  	assert !server1.new_record?, "did not save server1"
+
+  	server1.category_list = "test, tags"
+
+  	assert_nothing_raised do
+  		server1.save!
+  	end
+  end
+
+  test "must have either a hostname or an IP address" do
+  	blank_server = Server.new
+
+  	assert blank_server.new_record?, "server is not new"
+  	assert !blank_server.valid?, "blank server is valid"
+
+  	blank_server.hostname = "test"
+
+  	assert blank_server.valid?, "server with only hostname is not valid"
+
+  	blank_server.hostname = nil
+  	assert !blank_server.valid?, "blank server is valid after assigning hostname"
+
+  	blank_server.ip_address = "1.2.3.4"
+  	assert blank_server.valid?, "server with only IP address is not valid"
+
+  	blank_server.ip_address = nil
+  	assert !blank_server.valid?, "blank server is valid after assigning IP address"
+  end
 end

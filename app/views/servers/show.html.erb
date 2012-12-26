@@ -1,5 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<h3><%= server_display_name(@server) %></h3>
 
-<%= link_to 'Edit', edit_server_path(@server) %> |
-<%= link_to 'Back', servers_path %>
+<% if @server.categories.empty? %>
+	<h4>No categories</h4>
+<% else %>
+	<h4>Categories</h4>
+
+	<ul>
+		<% @server.categories.each do |category| %>
+			<li><%= category.name %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= link_to 'Edit', edit_server_path(@server), :class => "btn" %>
+<%= link_to 'Back', servers_path, :class => "btn" %>

@@ -1,0 +1,29 @@
+<%
+  url = (@category.new_record? ? categories_path : category_path(@category))
+  method = (@category.new_record? ? :post : :put)
+%>
+
+<%= form_tag(url, :method => method, :class => 'form-horizontal') do %>
+  <% if @category.errors.any? %>
+    <div class="text-error" id="error_explanation">
+      <h3><%= pluralize(@category.errors.count, "error") %> prohibited this server from being saved:</h3>
+
+      <ul>
+      <% @category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group string required">
+    <label class="string required control-label" for="name">Name</label>
+    <div class="controls">
+      <input class="string required" id="name" name="category[name]" size="50" type="text" value="<%= @category.name %>" />
+    </div>
+  </div>
+
+  <div class="actions">
+    <input class="btn" name="commit" type="submit" value="Create Category">
+  </div>
+<% end %>
