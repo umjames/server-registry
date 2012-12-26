@@ -1,2 +1,18 @@
-<h1>Category#show</h1>
-<p>Find me in app/views/category/show.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<h3>Category: <%= @category.name %></h3>
+
+<% if @category.taggings.empty? %>
+	<h4>No associated servers</h4>
+<% else %>
+	<h4>Associated with servers:</h4>
+
+	<ul>
+		<% Server.tagged_with(@category.name).each do |server| %>
+			<li><%= server_display_name(server) %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<%= link_to 'Edit', edit_category_path(@category), :class => "btn" %>
+<%= link_to 'Back', categories_path, :class => "btn" %>
