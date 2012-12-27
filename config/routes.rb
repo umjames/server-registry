@@ -1,8 +1,12 @@
+require File.join(File.dirname(__FILE__), "../app/api/mount_point")
+
 ServerRegistry::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   root :to => "servers#index"
+
+  mount ServerRegistry::API::MountPoint.app, :at => "/api"
 
   resources :servers
   resources :categories
