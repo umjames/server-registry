@@ -13,6 +13,19 @@ module ServerRegistry
 				Server.new(params)
 			end
 
+			def new_server_with_json(server_json_hash)
+				new_server = Server.new
+				new_server.hostname = server_json_hash[:hostname]
+				new_server.ip_address = server_json_hash[:ip_address]
+				new_server.port = server_json_hash[:port]
+
+				if server_json_hash.has_key?(:categories)
+					associate_server_with_categories(new_server, server_json_hash[:categories])
+				end
+
+				return new_server
+			end
+
 			def associate_server_with_categories(server, categories)
 				categories_as_string = case categories
 				when Array
@@ -28,6 +41,10 @@ module ServerRegistry
 				end
 
 				server.category_list = categories_as_string
+			end
+
+			def destroy_server(server)
+				server.destroy
 			end
 		end
 	end

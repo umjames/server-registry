@@ -8,6 +8,7 @@ gem 'rails', '3.2.9'
 gem 'mysql2'
 
 gem 'sinatra', '~> 1.3.3', :require => 'sinatra/base'
+gem 'sinatra-url-for', :git => 'git://github.com/umjames/sinatra-url-for.git'
 gem 'yajl-ruby', '~> 1.1.0', :require => 'yajl'
 
 # Gems used only for assets and not required

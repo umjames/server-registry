@@ -19,6 +19,12 @@ module ServerRegistry
 					return jsonify(servers_as_hash)
 				end
 
+				def get_server_response(server)
+					server_hash = server_fields(server)
+
+					return jsonify(server_hash)
+				end
+
 				def all_categories_response(categories)
 					categories_as_hash = categories.map do |category|
 						category_fields(category)

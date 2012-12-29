@@ -86,7 +86,7 @@ class ServersController < ApplicationController
   # DELETE /servers/1.json
   def destroy
     @server = get_server(params[:id])
-    @server.destroy
+    destroy_server(@server)
 
     respond_to do |format|
       format.html { redirect_to servers_url }

@@ -51,7 +51,8 @@ module ServerRegistry
 		        end
 
 		        def server_keys
-		        	%w(hostname
+		        	%w(id
+		        	hostname
 		        	ip_address
 		        	port)
 		        end
