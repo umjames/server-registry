@@ -46,4 +46,23 @@ class ServerTest < ActiveSupport::TestCase
   	blank_server.ip_address = nil
   	assert !blank_server.valid?, "blank server is valid after assigning IP address"
   end
+
+  test "servers can differ by port number" do
+    server1 = FactoryGirl.create(:server)
+
+    assert !server1.new_record?, "first server is unsaved"
+    assert server1.port.nil?, "port is not nil"
+
+    server2 = FactoryGirl.build(:server)
+
+    assert_equal server1.hostname, server2.hostname
+    assert_equal server1.ip_address, server2.ip_address
+    assert server2.port.nil?, "port is not nil"
+
+    assert !server2.valid?, "second server is valid"
+    
+    server2.port = 80
+
+    assert server2.valid?, "second server is not valid"
+  end
 end

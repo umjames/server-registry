@@ -13,6 +13,7 @@
 
   <%= f.input :hostname %>
   <%= f.input :ip_address, :label => "IP Address" %>
+  <%= f.input :port %>
   <%= f.input :categories, :collection => @categories, :include_blank => false, :input_html => { :multiple => true } %>
 
   <div class="actions">

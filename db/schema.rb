@@ -11,16 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223184248) do
+ActiveRecord::Schema.define(:version => 20121229075129) do
 
   create_table "servers", :force => true do |t|
     t.string   "hostname"
     t.string   "ip_address"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "port"
   end
 
-  add_index "servers", ["hostname", "ip_address"], :name => "index_servers_on_hostname_and_ip_address", :unique => true
+  add_index "servers", ["hostname", "ip_address", "port"], :name => "by_all_fields", :unique => true
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

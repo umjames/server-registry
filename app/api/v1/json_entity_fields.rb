@@ -52,7 +52,8 @@ module ServerRegistry
 
 		        def server_keys
 		        	%w(hostname
-		        	ip_address)
+		        	ip_address
+		        	port)
 		        end
 
 		        def category_keys

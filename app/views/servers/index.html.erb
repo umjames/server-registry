@@ -4,6 +4,7 @@
   <tr>
     <th>Hostname</th>
     <th>IP Address</th>
+    <th>Port</th>
     <th></th>
   </tr>
 
@@ -11,6 +12,7 @@
   <tr>
     <td><%= link_to server.hostname, server_path(server) %></td>
     <td><%= link_to server.ip_address, server_path(server) %></td>
+    <td><%= server.port %></td>
     <td>
       <%= link_to 'Edit', edit_server_path(server), :class => "btn btn-mini" %>
       <%= link_to 'Destroy', server, :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-mini" %>

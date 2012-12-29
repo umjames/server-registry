@@ -67,6 +67,8 @@ class ServersController < ApplicationController
     category_names = extract_category_names_param
 
     @server = get_server(params[:id])
+    @categories = all_category_names
+    
     associate_server_with_categories(@server, category_names)
 
     respond_to do |format|

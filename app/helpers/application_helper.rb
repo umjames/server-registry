@@ -1,13 +1,21 @@
 module ApplicationHelper
 	def server_display_name(server)
+		result = ""
+
 		if server.ip_address.blank?
-			return server.hostname
+			result = server.hostname
 		else
 			if server.hostname.blank?
-				return server.ip_address
+				result = server.ip_address
 			else
-				return "#{server.hostname} (#{server.ip_address})"
+				result = "#{server.hostname} (#{server.ip_address})"
 			end
 		end
+
+		unless server.port.nil?
+			result << " (port #{server.port})"
+		end
+
+		return result
 	end
 end
