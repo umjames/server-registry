@@ -6,7 +6,6 @@ gem 'rails', '3.2.9'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'factory_girl_rails', '4.1.0'
 
 gem 'sinatra', '~> 1.3.3', :require => 'sinatra/base'
 gem 'yajl-ruby', '~> 1.1.0', :require => 'yajl'
@@ -28,6 +27,11 @@ end
 gem 'jquery-rails'
 gem 'simple_form', '2.0.4'
 gem 'acts-as-taggable-on', '2.3.3'
+
+group :test do
+	gem 'rspec', '~> 2.12'
+	gem 'factory_girl_rails', '4.1.0'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

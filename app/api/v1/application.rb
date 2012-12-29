@@ -8,9 +8,15 @@ module ServerRegistry
 	module API
 		module V1
 			class Application < Sinatra::Base
+				include ServerRegistry::API::SetupMethods
 				include ServerRegistry::Servers::BaseLogic
 				include ServerRegistry::Categories::BaseLogic
 				include ServerRegistry::API::V1::JsonResponses
+
+				def initialize(app=nil)
+					connect_to_database
+					super
+				end
 
 				get "/servers" do
 					servers = all_servers
