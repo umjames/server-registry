@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'factory_girl_rails', '4.1.0'
 
 gem 'sinatra', '~> 1.3.3', :require => 'sinatra/base'
+gem 'yajl-ruby', '~> 1.1.0', :require => 'yajl'
 
 # Gems used only for assets and not required
 # in production environments by default.

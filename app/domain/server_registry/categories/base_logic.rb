@@ -13,6 +13,10 @@ module ServerRegistry
 				ActsAsTaggableOn::Tag.find(id)
 			end
 
+			def get_category_by_name(name)
+				ActsAsTaggableOn::Tag.where("name = ?", name).first
+			end
+
 			def new_category_with_params(params)
 				ActsAsTaggableOn::Tag.new(params)
 			end
