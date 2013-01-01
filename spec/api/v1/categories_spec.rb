@@ -53,5 +53,65 @@ describe "v1" do
 			last_response.should be_not_found
 			last_response.body.should be_empty
 		end
+
+		it "should allow removing a server from a category via hostname" do
+			memcached_servers = []
+
+			3.times do |number|
+				server = FactoryGirl.create(:dynamic_server)
+				server.category_list = "memcached"
+				server.save!
+
+				memcached_servers << server
+			end
+
+			random_server = memcached_servers.sample
+
+			delete "/category/memcached/server/#{random_server.hostname}"
+
+			last_response.should be_ok
+
+			get '/category/memcached'
+
+			last_response.should be_ok
+			json_response = Yajl::Parser.new(:symbolize_keys => true).parse(last_response.body)
+
+			json_response.should be_an_instance_of(Hash)
+			json_response[:name].should == "memcached"
+			json_response[:servers].should have(2).items
+			json_response[:servers].find do |servers_json|
+				servers_json[:hostname] == random_server.hostname
+			end.should be_nil
+		end
+
+		it "should allow removing a server from a category via IP address" do
+			memcached_servers = []
+
+			3.times do |number|
+				server = FactoryGirl.create(:dynamic_server)
+				server.category_list = "memcached"
+				server.save!
+
+				memcached_servers << server
+			end
+
+			random_server = memcached_servers.sample
+
+			delete "/category/memcached/server/#{random_server.ip_address}"
+
+			last_response.should be_ok
+
+			get '/category/memcached'
+
+			last_response.should be_ok
+			json_response = Yajl::Parser.new(:symbolize_keys => true).parse(last_response.body)
+
+			json_response.should be_an_instance_of(Hash)
+			json_response[:name].should == "memcached"
+			json_response[:servers].should have(2).items
+			json_response[:servers].find do |servers_json|
+				servers_json[:ip_address] == random_server.ip_address
+			end.should be_nil
+		end
 	end
 end

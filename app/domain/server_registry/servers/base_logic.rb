@@ -43,6 +43,25 @@ module ServerRegistry
 				server.category_list = categories_as_string
 			end
 
+			def find_server_in_category_with_name(category_name, server_name)
+				servers = Server.tagged_with(category_name)
+
+				return nil if servers.nil?
+
+				return servers.find do |server|
+					server.hostname == server_name || server.ip_address == server_name
+				end
+			end
+
+			def disassociate_server_from_category_with_name(server, category_name)
+				categories = server.categories
+				categories.reject! do |category|
+					category.name == category_name
+				end
+
+				server.category_list = categories.map(&:name).join(", ")
+			end
+
 			def destroy_server(server)
 				server.destroy
 			end

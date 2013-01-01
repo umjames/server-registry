@@ -90,6 +90,20 @@ module ServerRegistry
 					end
 				end
 
+				delete "/category/:category_name/server/:server_name" do
+					returning_server_error_on_invalid_save do
+						server = find_server_in_category_with_name(params[:category_name], params[:server_name])
+						
+						unless server.nil?
+							disassociate_server_from_category_with_name(server, params[:category_name])
+							server.save!
+							ok_response
+						else
+							not_found_response
+						end
+					end
+				end
+
 				protected
 
 				def returning_server_error_on_invalid_save(&block)
