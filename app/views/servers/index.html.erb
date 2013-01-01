@@ -10,8 +10,8 @@
 
 <% @servers.each do |server| %>
   <tr>
-    <td><%= link_to server.hostname, server_path(server) %></td>
-    <td><%= link_to server.ip_address, server_path(server) %></td>
+    <td><%= link_to_unless server.hostname.blank?, server.hostname, server_path(server) %></td>
+    <td><%= link_to_unless server.ip_address.blank?, server.ip_address, server_path(server) %></td>
     <td><%= server.port %></td>
     <td>
       <%= link_to 'Edit', edit_server_path(server), :class => "btn btn-mini" %>
