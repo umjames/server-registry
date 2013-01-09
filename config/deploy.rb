@@ -7,7 +7,6 @@ ssh_options[:forward_agent] = true
 
 set :application, "server-registry-server"
 set :repository,  "git@github.com:ShindigIO/server-registry.git"
-set :deploy_to, "/home/#{user}/webapps/#{application}"
 
 set :deploy_via, :remote_cache
 set :scm, :git
@@ -17,8 +16,9 @@ set :user, "software"
 set :use_sudo, false
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-set :rails_env, "production"
 set :shindig_db_backup_path, "~/bin/shindig_db_backup"
+
+set :deploy_to, "/home/#{user}/webapps/#{application}"
 
 role :web, "app1.shindig.io"                          # Your HTTP server, Apache/etc
 role :app, "app1.shindig.io"                          # This may be the same as your `Web` server
