@@ -20,12 +20,6 @@ set :shindig_db_backup_path, "~/bin/shindig_db_backup"
 
 set :deploy_to, "/home/#{user}/webapps/#{application}"
 
-role :web, "app1.shindig.io"                          # Your HTTP server, Apache/etc
-role :app, "app1.shindig.io"                          # This may be the same as your `Web` server
-role :db,  "app1.shindig.io", :primary => true # This is where Rails migrations will run
-role :db,  "admindb.shindig.io", :no_release => true # production database server
-
-
 task :staging do
   set :branch, "development"
   set :rails_env, "staging"   # setting this for running migrations
