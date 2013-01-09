@@ -25,10 +25,56 @@ role :app, "app1.shindig.io"                          # This may be the same as 
 role :db,  "app1.shindig.io", :primary => true # This is where Rails migrations will run
 role :db,  "admindb.shindig.io", :no_release => true # production database server
 
-before "deploy:finalize_update", "deploy:assets:symlink"
-after "deploy:update_code", "deploy:db:delete_repo_database_yml"
-after "deploy:setup", "deploy:db:setup"   unless fetch(:skip_db_setup, false)
-after "deploy:create_symlink", "deploy:db:symlink", "deploy:assets:precompile"
+
+task :staging do
+  set :branch, "development"
+  set :rails_env, "staging"   # setting this for running migrations
+  set :deploy_env, "staging"
+  set :database_name, "server_registry_staging"
+  set :shindig_db_backup_path, "~/bin/shindig_db_backup"
+  role :web, "stage.shindig.io"                          # Your HTTP server, Apache/etc
+  role :app, "stage.shindig.io"                          # This may be the same as your `Web` server
+  role :db,  "stage.shindig.io", :primary => true # This is where Rails migrations will run
+  
+  set :asset_env, "RAILS_GROUPS=assets RAILS_RELATIVE_URL_ROOT=\"/servers\""
+  
+  before "deploy:finalize_update", "deploy:assets:symlink"
+  after "deploy:create_symlink", "deploy:assets:precompile"
+end
+
+task :qa do
+  set :branch, "qa"
+  set :rails_env, "qa"   # setting this for running migrations
+  set :deploy_env, "qa"
+  set :database_name, "server_registry_qa"
+  set :shindig_db_backup_path, "~/bin/shindig_db_backup"
+  role :web, "qa.shindig.io"                          # Your HTTP server, Apache/etc
+  role :app, "qa.shindig.io"                          # This may be the same as your `Web` server
+  role :db,  "qa.shindig.io", :primary => true # This is where Rails migrations will run
+  
+  set :asset_env, "RAILS_GROUPS=assets RAILS_RELATIVE_URL_ROOT=\"/servers\""
+  
+  before "deploy:finalize_update", "deploy:assets:symlink"
+  after "deploy:create_symlink", "deploy:assets:precompile"
+end
+
+task :production do
+  set :branch, "master"
+  set :deploy_env, "production"
+  set :database_name, "server_registry_prod"
+  set :shindig_db_backup_path, "~/bin/shindig_db_backup"
+  role :web, "app1.shindig.io"                          # Your HTTP server, Apache/etc
+  role :app, "app1.shindig.io"       # This may be the same as your `Web` server
+  role :db, "app1.shindig.io", :primary => true # This is where Rails migrations will run
+  role :db, "admindb.shindig.io", :no_release => true # Production database server
+  
+  set :asset_env, "RAILS_GROUPS=assets RAILS_RELATIVE_URL_ROOT=\"/servers\""
+
+  before "deploy:finalize_update", "deploy:assets:symlink"
+  after "deploy:update_code", "deploy:db:delete_repo_database_yml"
+  after "deploy:setup", "deploy:db:setup"   unless fetch(:skip_db_setup, false)
+  after "deploy:create_symlink", "deploy:db:symlink", "deploy:assets:precompile"
+end
 
 
 # If you are using Passenger mod_rails uncomment this:
