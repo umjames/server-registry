@@ -33,9 +33,11 @@ test:
   username: registryuser
   password: registrypassword
 
+# change this for production
 production:
   <<: *common_settings
   database: server_registry_prod
-  host: localhost
-  username: change_me
-  password: change_me
+  host: admindb.shindig.io
+  username: serverreguser
+  password: <%= Capistrano::CLI.password_prompt("Enter production MySQL database password: ") %>
+
